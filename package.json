@@ -1,4 +1,18 @@
-  "express": "^4.19.2",
-  "node-telegram-bot-api": "^0.66.0"
-}
+{
+  "name": "khipu-webhook-listener",
+  "version": "1.0.0",
+  "description": "Un servidor simple para escuchar notificaciones de webhook de Khipu con bot de Telegram.",
+  "main": "webhook_server.js",
+  "scripts": {
+    "start": "node webhook_server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.7",
+    "express": "^4.19.2",
+    "node-telegram-bot-api": "^0.66.0"
+  }
 }
