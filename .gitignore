@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 node_modules/
 .env
 __pycache__/
 *.pyc
+=======
+node_modules/
+.env
+__pycache__/
+*.pyc
+>>>>>>> 8ccd15582954fdb03959ebeffec6ff339ed5b2c1
