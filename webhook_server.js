@@ -97,9 +97,8 @@ app.post('/api/khipu/webhook', (req, res) => {
     }
 
     const paymentId = notificationData.payment_id;
-    const status = notificationData.status; // 'done' usually means paid in v3 notifications? 
-    // Actually v3 notification format might differ, let's log it.
-    // Documentation says it sends the payment object.
+    const amount = notificationData.amount;
+    const payerName = notificationData.payer_name;
 
     console.log('Notification Data:', JSON.stringify(notificationData, null, 2));
 
@@ -107,13 +106,17 @@ app.post('/api/khipu/webhook', (req, res) => {
     if (paymentChats.has(paymentId)) {
         const chatId = paymentChats.get(paymentId);
 
-        if (status === 'done') {
-            bot.sendMessage(chatId, `✅ ¡Pago recibido con éxito! (ID: ${paymentId})`);
-            // Optional: Remove from map if you don't need it anymore
-            // paymentChats.delete(paymentId); 
-        } else {
-            bot.sendMessage(chatId, `Actualización de pago: ${status} (ID: ${paymentId})`);
-        }
+        // If Khipu sends a notification, the payment was successful
+        const message = `✅ ¡Pago recibido con éxito!\n\n` +
+            `💰 Monto: $${amount} CLP\n` +
+            `👤 Pagador: ${payerName}\n` +
+            `🔑 ID: ${paymentId}`;
+
+        bot.sendMessage(chatId, message);
+
+        // Optional: Remove from map after confirming
+        paymentChats.delete(paymentId);
+        console.log(`Payment ${paymentId} confirmed and removed from map`);
     } else {
         console.log(`No chat found for payment ${paymentId}`);
     }
